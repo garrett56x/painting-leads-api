@@ -15,6 +15,7 @@ app.get("/", (req, res) => {
 });
 
 require("./app/routes/user.routes.js")(app);
+require("./app/routes/authenticate.routes.js")(app);
 require("./app/routes/lead.routes.js")(app);
 
 // set port, listen for requests
