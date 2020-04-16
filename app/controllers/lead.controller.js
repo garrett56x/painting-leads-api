@@ -39,6 +39,7 @@ exports.create = (req, res) => {
 
 // Retrieve all leads from the database.
 exports.findAll = (req, res) => {
+    console.log("IN LEADS?");
     Lead.getAll((err, data) => {
         if (err) {
             res.status(500).send({
