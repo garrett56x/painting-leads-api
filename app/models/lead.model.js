@@ -56,7 +56,7 @@ Lead.getAll = result => {
             return;
         }
 
-        console.log("leads: ", res);
+        console.log("Returning all leads");
         result(null, res);
     });
 };
@@ -103,6 +103,19 @@ Lead.remove = (id, result) => {
         }
 
         console.log("deleted lead with id: ", id);
+        result(null, res);
+    });
+};
+
+Lead.getLeadsForUser = (id, result) => {
+    sql.query("SELECT * FROM user_leads WHERE user_id = ?", id, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        }
+
+        console.log("Returning all leads for User.");
         result(null, res);
     });
 };

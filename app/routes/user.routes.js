@@ -15,4 +15,7 @@ module.exports = app => {
 
     // Delete a User with userId
     app.delete("/users/:userId", users.delete);
+
+    // Get all Leads for a User with userId
+    app.get("/users/:userId/leads", users.findAllLeads);
 };

@@ -51,7 +51,7 @@ User.getAll = result => {
             return;
         }
 
-        console.log("users: ", res);
+        console.log("Returning all Users.");
         result(null, res);
     });
 };

@@ -1,4 +1,5 @@
 const User = require("../models/user.model.js");
+const Lead = require("../models/lead.model.js");
 
 // Create & Save a new User
 exports.create = (req, res) => {
@@ -112,3 +113,16 @@ exports.delete = (req, res) => {
         }
     });
 };
+
+// Finds all Leads belonging to a User
+exports.findAllLeads = (req, res) => {
+    Lead.getLeadsForUser(req.params.userId, (err, data) => {
+        if (err) {
+            res.status(500).send({
+                message: err.message || "An error occured while retrieving leads for user.",
+            });
+        } else {
+            res.send(data);
+        }
+    });
+}
