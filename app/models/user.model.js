@@ -19,7 +19,7 @@ User.create = (newUser, result) => {
             return;
         }
 
-        console.log("created user: ", { id: result.insertId, ...newUser });
+        console.log("created user: ", { id: res.insertId });
         result(null, { id: res.insertId, ...newUser });
     });
 };
@@ -33,7 +33,7 @@ User.findById = (userId, result) => {
         }
 
         if (res.length) {
-            console.log("found user: ", res[0]);
+            console.log("found user with Id: ", res[0].id);
             result(null, res[0]);
             return;
         }
@@ -73,8 +73,8 @@ User.updateById = (id, user, result) => {
                 return;
             }
 
-            console.log("updated user: ", { id: id, ...user });
-            result(null, { id: id, ...user });
+            console.log("updated user with Id: ", id);
+            result(null, { id, ...user });
         }
     );
 };

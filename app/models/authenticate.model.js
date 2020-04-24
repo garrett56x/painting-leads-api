@@ -30,21 +30,4 @@ Authenticate.login = (auth, result) => {
     });
 };
 
-// sql.query(`SELECT * FROM leads WHERE id = ${leadId}`, (err, res) => {
-//     if (err) {
-//         console.log("error: ", err);
-//         result(err, null);
-//         return;
-//     }
-
-//     if (res.length) {
-//         console.log("found lead: ", res[0]);
-//         result(null, res[0]);
-//         return;
-//     }
-
-//     // Lead not found by ID
-//     result({ kinds: "not_found" }, null);
-// });
-
 module.exports = Authenticate;

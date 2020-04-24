@@ -24,7 +24,7 @@ Lead.create = (newLead, result) => {
             return;
         }
 
-        console.log("created lead: ", { id: result.insertId, ...newLead });
+        console.log("created lead with Id: ", { id: res.insertId });
         result(null, { id: res.insertId, ...newLead });
     });
 };
@@ -38,7 +38,7 @@ Lead.findById = (leadId, result) => {
         }
 
         if (res.length) {
-            console.log("found lead: ", res[0]);
+            console.log("found lead with Id: ", res[0].id);
             result(null, res[0]);
             return;
         }
@@ -82,8 +82,8 @@ Lead.updateById = (id, lead, result) => {
                 return;
             }
 
-            console.log("updated lead: ", { id: id, ...lead });
-            result(null, { id: id, ...lead });
+            console.log("updated lead with Id: ", id);
+            result(null, { id, ...lead });
         }
     );
 };
