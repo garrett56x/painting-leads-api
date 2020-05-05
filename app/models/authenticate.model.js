@@ -7,7 +7,7 @@ const Authenticate = function(auth) {
 };
 
 Authenticate.login = (auth, result) => {
-    sql.query(`SELECT id, password FROM users WHERE email = "${auth.email}"`, (err, res) => {
+    sql.query(`SELECT id, password FROM Users WHERE email = "${auth.email}"`, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);

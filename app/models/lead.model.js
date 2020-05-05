@@ -17,7 +17,7 @@ const Lead = function(lead) {
 };
 
 Lead.create = (newLead, result) => {
-    sql.query("INSERT INTO leads SET ?", newLead, (err, res) => {
+    sql.query("INSERT INTO Leads SET ?", newLead, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -30,7 +30,7 @@ Lead.create = (newLead, result) => {
 };
 
 Lead.findById = (leadId, result) => {
-    sql.query(`SELECT * FROM leads WHERE id = ${leadId}`, (err, res) => {
+    sql.query(`SELECT * FROM Leads WHERE id = ${leadId}`, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -49,7 +49,7 @@ Lead.findById = (leadId, result) => {
 };
 
 Lead.getAll = result => {
-    sql.query("SELECT * FROM leads", (err, res) => {
+    sql.query("SELECT * FROM Leads", (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -63,7 +63,7 @@ Lead.getAll = result => {
 
 Lead.updateById = (id, lead, result) => {
     sql.query(
-        `UPDATE leads SET email = ?, phone = ?, name = ?, address1 = ?, address2 = ?, address3 = ?,
+        `UPDATE Leads SET email = ?, phone = ?, name = ?, address1 = ?, address2 = ?, address3 = ?,
         city = ?, state = ?, zip = ?, stories = ?, estimate_requests = ?, description = ? WHERE id = ?`,
         [
             lead.email, lead.phone, lead.name, lead.address1, lead.address2, lead.address3,
@@ -89,7 +89,7 @@ Lead.updateById = (id, lead, result) => {
 };
 
 Lead.remove = (id, result) => {
-    sql.query("DELETE FROM leads WHERE id = ?", id, (err, res) => {
+    sql.query("DELETE FROM Leads WHERE id = ?", id, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -108,7 +108,14 @@ Lead.remove = (id, result) => {
 };
 
 Lead.getLeadsForUser = (id, result) => {
-    sql.query("SELECT * FROM user_leads WHERE user_id = ?", id, (err, res) => {
+    const query = `SELECT Leads.*, UserLeads.notes,
+                    UserLeads.updated_at as user_updated_at,
+                    UserLeads.created_at as purchase_date
+                    FROM UserLeads
+                    JOIN Leads ON UserLeads.lead_id = Leads.id
+                    AND UserLeads.user_id = ?`;
+
+    sql.query(query, id, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
