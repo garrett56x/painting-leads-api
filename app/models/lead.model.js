@@ -127,4 +127,26 @@ Lead.getLeadsForUser = (id, result) => {
     });
 };
 
+Lead.purchase = (userId, leadIds, result) => {
+    let query = "INSERT INTO UserLeads (user_id, lead_id) VALUES ";
+    const params = [];
+    for (let i=0; i<leadIds.length; i++) {
+        query += "(?,?)";
+        if (i < leadIds.length - 1) query += ", ";
+        params.push(userId);
+        params.push(leadIds[i]);
+    }
+
+    sql.query(query, params, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        }
+
+        console.log("Returning all leads for User.");
+        result(null, res);
+    });
+}
+
 module.exports = Lead;

@@ -15,4 +15,7 @@ module.exports = app => {
 
     // Delete a lead with leadId
     app.delete("/leads/:leadId", leads.delete);
+
+    // Purchase leads for user
+    app.post("/leads/purchase", leads.purchase);
 };

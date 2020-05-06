@@ -117,3 +117,16 @@ exports.delete = (req, res) => {
         }
     });
 };
+
+// Purchase leads for user
+exports.purchase = (req, res) => {
+    Lead.purchase(req.body.userId, req.body.leadIds, (err, data) => {
+        if (err) {
+            res.status(500).send({
+                message: err.message || "An error occured while purchasing the lead(s).",
+            });
+        } else {
+            res.send({ message: "Lead(s) purchased successfully!" });
+        }
+    });
+};
