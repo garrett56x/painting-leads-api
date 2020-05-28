@@ -21,9 +21,31 @@ exports.create = (req, res) => {
         state: req.body.state,
         zip: req.body.zip,
         stories: req.body.stories,
+        rooms: req.body.rooms,
         estimate_requests: req.body.estimate_requests,
         description: req.body.description,
+        type1: req.body.type1,
+        type2: req.body.type2,
+        type3: req.body.type3,
     });
+
+    lead.size = "S";
+    if (lead.type3 === "Full") {
+        lead.size = "L";
+        if (lead.stories > 2) {
+            lead.size = "XL";
+        } else if (lead.stories < 2) {
+            lead.size = "M";
+        }
+    }
+
+    if (lead.type1 === "Interior") {
+        if (lead.rooms < 2) lead.size = "XS";
+    }
+
+    if (lead.type1 === "Both") {
+        lead.size = "XL";
+    }
 
     // Save lead in the database
     Lead.create(lead, (err, data) => {
@@ -45,6 +67,40 @@ exports.findAll = (req, res) => {
                 message: err.message || "An error occured while retrieving leads.",
             });
         } else {
+            data.forEach((lead) => {
+                switch (lead.size) {
+                    case "XL":
+                        lead.price = 20;
+                        break;
+                    case "L":
+                        lead.price = 15;
+                        break;
+                    case "S":
+                        lead.price = 5;
+                        break;
+                    case "XS":
+                        lead.price = 0;
+                        break;
+                    default:
+                        lead.price = 10;
+                }
+                const createdAt = new Date(lead.created_at).valueOf();
+                const nowDate = new Date().valueOf();
+                const timeDiff = nowDate - createdAt;
+
+                if (timeDiff > 604800000) {
+                    lead.price -= 5;
+                }
+
+                if (timeDiff > 1209600000) {
+                    lead.price -= 5;
+                }
+
+                if (timeDiff > 1814400000 || lead.price < 0) {
+                    lead.price = 0;
+                }
+            });
+
             res.send(data);
         }
     });

@@ -12,8 +12,13 @@ const Lead = function(lead) {
     this.state = lead.state;
     this.zip = lead.zip;
     this.stories = lead.stories;
+    this.rooms = lead.rooms;
     this.estimate_requests = lead.estimate_requests;
     this.description = lead.description;
+    this.type1 = lead.type1;
+    this.type2 = lead.type2;
+    this.type3 = lead.type3;
+    this.size = lead.size;
 };
 
 Lead.create = (newLead, result) => {
